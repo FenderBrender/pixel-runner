@@ -1,0 +1,8 @@
+UCY/
+Internship_3AHEALTH/
+**/Oracle_JDK-*/
+*.zip
+*.tar*
+*.7z
+*.iso
+.DS_Store
