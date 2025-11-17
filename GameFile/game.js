@@ -48,13 +48,18 @@
   }
 
   let paused = false;
+  
+  function tick(dt){
+    spawn(); update(dt); 
+  }
+
+  function render(){
+    draw(); 
+  }
+
   function loop(now=performance.now()){
     const dt = Math.min(0.033,(now-last)/1000); last = now;
-    if (!paused) { 
-      update(dt); 
-    }
-    draw();
-    requestAnimationFrame(loop);
+    tick(dt); render(); requestAnimationFrame(loop);
   }
 
   function start(){
