@@ -1,35 +1,47 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <title>Pixel Runner</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <header class="topbar">
-    <h1>Pixel Runner</h1>
-    <div id="hud" aria-live="polite">
-      <span>Score: <strong id="score">0</strong></span>
-      <span>Lives: <strong id="lives">3</strong></span>
-    </div>
-    <button id="helpBtn" title="Help">?</button>
-  </header>
-  <main>
-    <canvas id="game" width="800" height="400" role="img" aria-label="Game canvas"></canvas>
-  </main>
+  <head>
+    <meta charset="utf-8" />
+    <title>Pixel Runner</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    
+    <header class="topbar">
+      <h1>Pixel Runner</h1>
+      <div id="hud" aria-live="polite">
+        <span>Score: <strong id="score">0</strong></span>
+        <span>Lives: <strong id="lives">3</strong></span>
+      </div>
+      <button id="helpBtn" title="Help">?</button>
+    </header>
+   
+    <main>
+      <canvas id="game" width="800" height="400" role="img" aria-label="Game canvas"></canvas>
+    </main>
 
-  <div id="helpModal" class="modal" hidden>
-    <div class="modal-card">
-      <h2>Controls</h2>
-      <ul><li>←/→</li><li>Space</li><li>P</li><li>R</li></ul>
-      <button id="closeHelp">Close</button>
+    <div id="helpModal" class="modal" hidden>
+      <div class="modal-card">
+        <h2>Keyboard Controls</h2>
+        <ul>
+          <li><kbd>←</kbd> / <kbd>→</kbd> — Move left/right</li>
+          <li><kbd>Space</kbd> — Jump</li>
+          <li><kbd>P</kbd> — Pause/Resume</li>
+          <li><kbd>R</kbd> — Restart game</li>
+        </ul>
+        <p style="font-size:0.9em;opacity:0.8;">Press Esc or click outside to close.</p>
+        <button id="closeHelp">Close</button>
+      </div>
     </div>
-  </div>
-  <script src="game.js"></script>
-  <script>
-   // HUD init (quick and dirty)
-   document.getElementById('score').textContent = 0;
-   document.getElementById('lives').textContent = 3;
-  </script></body>
+
+    <script src="game.js"></script>
+
+    <script>
+    // HUD init (quick and dirty)
+    document.getElementById('score').textContent = 0;
+    document.getElementById('lives').textContent = 3;
+    </script>
+  
+  </body>
 </html>
