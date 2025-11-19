@@ -64,3 +64,8 @@ canvas { display:block; margin:12px auto; background:#0b1120; border:1px solid #
     padding:16px 20px; 
     min-width:280px;
 }
+
+kbd {
+  background:#1b2a4b; padding:2px 4px; border-radius:4px;
+  border:1px solid #58a6ff3d; font-size:0.85em;
+}

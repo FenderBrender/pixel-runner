@@ -59,21 +59,32 @@
 
   function loop(now=performance.now()){
     const dt = Math.min(0.033,(now-last)/1000); last = now;
-    tick(dt); render(); requestAnimationFrame(loop);
+    tick(dt);
+    render();
+    requestAnimationFrame(loop);
   }
 
   function start(){
-  // reset world
-  world.score=0; world.lives=3;
-  hero.x=50; hero.y=300; hero.vy=0; hero.onGround=true;
-  world.coins=[]; world.spikes=[];
-  last = performance.now();
-  loop(); // NOTE: starts a new RAF chain (hidden bug)
+    // reset world
+    world.score=0; world.lives=3;
+    hero.x=50; hero.y=300; hero.vy=0; hero.onGround=true;
+    world.coins=[]; world.spikes=[];
+    last = performance.now();
+    loop(); // NOTE: starts a new RAF chain (hidden bug)
   }
   
   window.addEventListener('keydown', e => { if (e.key.toLowerCase()==='r') start(); });
   window.addEventListener('keydown', e => { if (e.key.toLowerCase()==='p') paused=!paused; }); 
   window.addEventListener('keydown', e => keys.add(e.code==='Space'?'Space':e.key));
   window.addEventListener('keyup',   e => keys.delete(e.code==='Space'?'Space':e.key));
+  helpBtn.addEventListener('click', () => helpModal.hidden = false);
+  closeHelp.addEventListener('click', () => helpModal.hidden = true);
+  helpModal.addEventListener('click', (e) => {
+    if (e.target === helpModal) helpModal.hidden = true;
+  });
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !helpModal.hidden) helpModal.hidden = true;
+  });
+  
   loop();
 })();
