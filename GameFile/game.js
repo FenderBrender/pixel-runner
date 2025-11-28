@@ -75,12 +75,46 @@
   });
 
   window.addEventListener('keydown', e => {
-    if (e.key.toLowerCase()==='p') paused=!paused; 
+    if (e.key.toLowerCase() === 'p') paused=!paused; 
   }); 
 
-  window.addEventListener('keydown', e => keys.add(e.code==='Space'?'Space':e.key));
+  window.addEventListener('keydown', e => keys.add(e.code === 'Space' ? 'Space' : e.key));
 
-  window.addEventListener('keyup',   e => keys.delete(e.code==='Space'?'Space':e.key));
+  window.addEventListener('keyup',   e => keys.delete(e.code === 'Space' ? 'Space' : e.key));
+
+  window.addEventListener('keydown', e => {
+      if(e.key === 'Escape' && helpModal.hidden == true){
+        helpModal.hidden = false;
+        if(!paused) paused = !paused;
+      }
+      else if(e.key === 'Escape' && helpModal.hidden == false){
+        helpModal.hidden = true;
+        if(paused) paused = !paused;
+      }
+    });
+
+  const helpBtn = document.getElementById('helpBtn');
+  const helpModal = document.getElementById('helpModal');
+  const closeHelp = document.getElementById('closeHelp');
+
+  if (helpBtn && helpModal && closeHelp) {
+    helpBtn.addEventListener('click', () => {
+      helpModal.hidden = false;
+      if(!paused) paused = !paused;
+    });
+
+    closeHelp.addEventListener('click', () => {
+      helpModal.hidden = true;
+      if(paused) paused = !paused;
+    });
+
+    helpModal.addEventListener('click', (e) => {
+      if (e.target === helpModal) {
+        helpModal.hidden = true;
+      }
+    });
+  }
 
   loop();
+
 })();
