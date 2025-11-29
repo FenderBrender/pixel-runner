@@ -251,12 +251,6 @@
       helpModal.hidden = true;
       if (paused) paused = !paused;
     });
-
-    helpModal.addEventListener('click', e => {
-      if (e.target === helpModal) {
-        helpModal.hidden = true;
-      }
-    });
   }
 
   loop();
