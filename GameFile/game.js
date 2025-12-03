@@ -34,17 +34,26 @@
 
   let last = performance.now();
 
+  // --- Images ---
   const bgImg = new Image();
   bgImg.src = "../assets/bg.jpg";
-
   const heroSheet = new Image();
   heroSheet.src = "../assets/hero.png";
-
   const coinSheet = new Image();
   coinSheet.src = "../assets/coin.png";
-
   const spikeImg = new Image();
   spikeImg.src = "../assets/spike.png";
+
+    // --- Sound Effects ---
+  const jumpSfx = new Audio("../assets/sounds/jump.mp3");
+  const coinSfx = new Audio("../assets/sounds/coin.mp3");
+  const hitSfx = new Audio("../assets/sounds/hit.mp3");
+  const gameoverSfx = new Audio("../assets/sounds/gameover.mp3");
+
+  jumpSfx.volume = 0.5;
+  coinSfx.volume = 0.5;
+  hitSfx.volume = 0.6;
+  gameoverSfx.volume = 0.8;
 
   function spawn() {
     if (Math.random() < 0.03) {
@@ -85,6 +94,8 @@
     if (keys.has('Space') && hero.onGround) {
       hero.vy = -380;
       hero.onGround = false;
+      jumpSfx.currentTime = 0;
+      jumpSfx.play();
     }
 
     hero.vy += 900 * dt;
@@ -99,23 +110,31 @@
     world.coins.forEach(c => (c.x -= 200 * dt));
     world.spikes.forEach(s => (s.x -= 220 * dt));
 
-    world.coins = world.coins.filter(c =>
-      !aabb(hero, c) ? true : (world.score++, false)
-    );
+    world.coins = world.coins.filter(c => {
+      if (!aabb(hero, c)) return true;
+      world.score++;
+      coinSfx.currentTime = 0;
+      coinSfx.play();
+      return false;
+    });
 
     world.spikes = world.spikes.filter(s => {
       if (!aabb(hero, s)) return true;
       if (world.lives > 0) {
         world.lives--;
+        hitSfx.currentTime = 0;
+        hitSfx.play();
       }
       return false;
     });
 
     // trigger Game Over once
     if (world.lives <= 0 && !gameOver) {
-      world.lives = 0;      // clamp at 0
+      world.lives = 0;
       gameOver = true;
       paused = true;
+      gameoverSfx.currentTime = 0;
+      gameoverSfx.play();
     }
 
     // --- sprite animations ---
