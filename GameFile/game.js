@@ -18,8 +18,9 @@
   let heroFrame = 0;
   let heroFrameTimer = 0;
 
-  const COIN_MIN_Y = GROUND_Y - MAX_JUMP_HEIGHT;
+  const COIN_MIN_Y = GROUND_Y - MAX_JUMP_HEIGHT * 2;
   const COIN_MAX_Y = GROUND_Y;
+
   const COIN_FRAME_COUNT = 6;
   const COIN_FRAME_DURATION = 0.08;
   const COIN_FRAME_W = 16;
@@ -29,10 +30,11 @@
   let coinFrameTimer = 0;
 
   const keys = new Set();
-  const hero = { x: 50, y: GROUND_Y, w: 40, h: 40, vy: 0, onGround: true };
+  const hero = { x: 50, y: GROUND_Y, w: 40, h: 40, vy: 0, onGround: true, jumpsLeft: 2 };
   const world = { score: 0, lives: 3, hero, coins: [], spikes: [] };
 
   let last = performance.now();
+  let spaceWasDown = false;
 
   // --- Images ---
   const bgImg = new Image();
@@ -57,9 +59,7 @@
 
   function spawn() {
     if (Math.random() < 0.03) {
-      const minY = 220;
-      const maxY = 300;
-      const coinY = (minY + Math.random() * (maxY - minY)) | 0;
+      const coinY = (COIN_MIN_Y + Math.random() * (COIN_MAX_Y - COIN_MIN_Y)) | 0;
       world.coins.push({
         x: canvas.width + 20,
         y: coinY,
@@ -86,17 +86,22 @@
     );
   }
 
-  function update(dt) {
+  function update(dt){
     const speed = 220;
+    const spaceDown = keys.has('Space');
+
     if (keys.has('ArrowRight')) hero.x += speed * dt;
     if (keys.has('ArrowLeft'))  hero.x -= speed * dt;
 
-    if (keys.has('Space') && hero.onGround) {
+    // --- double jump with edge detection ---
+    if (spaceDown && !spaceWasDown && hero.jumpsLeft > 0) {
       hero.vy = -380;
       hero.onGround = false;
+      hero.jumpsLeft--;
       jumpSfx.currentTime = 0;
       jumpSfx.play();
     }
+    spaceWasDown = spaceDown;
 
     hero.vy += 900 * dt;
     hero.y += hero.vy * dt;
@@ -104,7 +109,9 @@
       hero.y = GROUND_Y;
       hero.vy = 0;
       hero.onGround = true;
+      hero.jumpsLeft = 2;   // reset both jumps when landing
     }
+
 
     spawn();
     world.coins.forEach(c => (c.x -= 200 * dt));
@@ -128,7 +135,6 @@
       return false;
     });
 
-    // trigger Game Over once
     if (world.lives <= 0 && !gameOver) {
       world.lives = 0;
       gameOver = true;
@@ -137,7 +143,6 @@
       gameoverSfx.play();
     }
 
-    // --- sprite animations ---
     heroFrameTimer += dt;
     if (heroFrameTimer >= HERO_FRAME_DURATION) {
       heroFrameTimer -= HERO_FRAME_DURATION;
@@ -233,6 +238,7 @@
     heroFrameTimer = 0;
     coinFrame = 0;
     coinFrameTimer = 0;
+    spaceWasDown = false;
   }
 
   window.addEventListener('keydown', e => {
@@ -246,6 +252,7 @@
   window.addEventListener('keydown', e =>
     keys.add(e.code === 'Space' ? 'Space' : e.key)
   );
+
   window.addEventListener('keyup', e =>
     keys.delete(e.code === 'Space' ? 'Space' : e.key)
   );
