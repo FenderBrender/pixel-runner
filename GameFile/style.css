@@ -5,6 +5,8 @@
     --accent:#58a6ff; 
 }
 
+.game-wrapper { position: relative; }
+
 body { 
     margin:0; 
     font-family:system-ui,Segoe UI,Roboto,sans-serif; 
@@ -63,4 +65,96 @@ canvas { display:block; margin:12px auto; background:#0b1120; border:1px solid #
     border-radius:14px; 
     padding:16px 20px; 
     min-width:280px;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 20;
+}
+
+.overlay[hidden] {
+  display: none;
+}
+
+.overlay-card {
+  width: min(520px, 92vw);
+  background: rgba(20, 20, 20, 0.92);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 14px;
+  padding: 20px 22px;
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+.title {
+  margin: 0 0 6px 0;
+  font-size: 34px;
+  letter-spacing: 0.5px;
+}
+
+.subtitle {
+  margin: 0 0 14px 0;
+  opacity: 0.85;
+}
+
+.controls h2 {
+  margin: 12px 0 8px 0;
+  font-size: 16px;
+  opacity: 0.95;
+}
+
+.controls ul {
+  margin: 0;
+  padding-left: 18px;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.menu-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.btn-primary, .btn-secondary {
+  border: 0;
+  border-radius: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-primary {
+  background: #fff;
+  color: #111;
+}
+
+.btn-secondary {
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+}
+
+.btn-secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.return-menu-btn {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  z-index: 30;
+  border: 0;
+  border-radius: 10px;
+  padding: 8px 12px;
+  background: rgba(255,255,255,0.9);
+  color: #111;
+  font-weight: 700;
+  cursor: pointer;
 }
