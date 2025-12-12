@@ -18,6 +18,35 @@
   <main>
     <canvas id="game" width="800" height="400" role="img" aria-label="Game canvas"></canvas>
   </main>
+    <!-- Main Menu Overlay -->
+  <div id="menuOverlay" class="overlay">
+    <div class="overlay-card">
+      <h1 class="title">Pixel Runner</h1>
+      <p class="subtitle">Run. Jump. Collect coins. Avoid spikes.</p>
+
+      <div class="controls">
+        <h2>Controls</h2>
+        <ul>
+          <li><b>← →</b> Move</li>
+          <li><b>Space</b> Jump / Double Jump</li>
+          <li><b>P</b> Pause</li>
+          <li><b>Esc</b> Help</li>
+        </ul>
+      </div>
+
+      <div class="menu-actions">
+        <button id="startBtn" class="btn-primary">Start Game</button>
+        <!-- Optional placeholder for later -->
+        <button id="settingsBtn" class="btn-secondary" disabled title="Coming soon">
+          Settings (soon)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Game Over Menu Button (shown only on game over) -->
+  <button id="returnMenuBtn" class="return-menu-btn" hidden>Return to Main Menu</button>
+
 
   <div id="helpModal" class="modal" hidden>
     <div class="modal-card">
